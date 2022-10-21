@@ -20,6 +20,7 @@ function App({ Component, pageProps }: AppProps) {
         <QueryClientProvider client={queryClient}>
           <Component {...pageProps} />
         </QueryClientProvider>
+        <div id="modal-root"></div>
       </RecoilRoot>
     </>
   );
