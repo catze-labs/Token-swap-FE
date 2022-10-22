@@ -1,7 +1,8 @@
 declare global {
   interface Window {
-    // foo: string;
+    ethereum: import("ethers").providers.ExternalProvider;
+    web3: import("web3");
   }
 }
 
-// export const foo = window.foo
+export const ethereum = window.ethereum;

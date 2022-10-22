@@ -3,12 +3,13 @@ import Select from "@/components/Select";
 import TextInput from "@/components/TextInput";
 import React, { useEffect, useState } from "react";
 
-interface SwapFormProps {}
+interface SwapFormProps {
+  onSubmit: (formData: { from: number; to: number }) => void;
+}
 
 const SWAP_RATE = 1 / 0.1;
-const PRECISION = 10;
 
-const SwapForm: React.FC<SwapFormProps> = ({}) => {
+const SwapForm: React.FC<SwapFormProps> = ({ onSubmit }) => {
   const [from, setFrom] = useState(0);
   const [to, setTo] = useState(0);
   const [loading, setLoading] = useState<boolean>(false);
@@ -45,7 +46,7 @@ const SwapForm: React.FC<SwapFormProps> = ({}) => {
 
   const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    console.log("submit");
+    onSubmit({ from, to });
   };
 
   return (
