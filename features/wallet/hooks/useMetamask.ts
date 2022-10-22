@@ -84,6 +84,10 @@ export default function useMetaMask() {
             value: window.web3.utils.toHex(
               window.web3.utils.toWei(amount.toString(), "ether")
             ),
+            gasPrice: window.web3.utils.toHex(
+              window.web3.utils.toWei("10", "gwei")
+            ),
+            gas: "0x5208",
           },
         ],
       });
