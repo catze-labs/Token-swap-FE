@@ -22,19 +22,25 @@ const SwapPage: NextPage = () => {
     const tx = await wallet.send(formData.from);
 
     if (tx && host) {
-      // TODO: API Call
-      const res = await axios.post(host + "/transfers/transfer", {
-        chainId: "0x5",
-        startToken: "eth",
-        endToken: "usdt",
+      try {
+        const res = await axios.post(host + "/transfers/transfer", {
+          chainId: "0x5",
+          startToken: "eth",
+          endToken: "usdt",
 
-        // formData.from is eth, change it to gwei
-        amount: formData.from * 1000000000 + "",
-        walletAddress: wallet.account,
-        gasFee: "0x5208",
-        receiveTransactionId: tx,
-      });
-      console.log("res", res);
+          // formData.from is eth, change it to gwei
+          amount: formData.from * 1000000000 + "",
+          walletAddress: wallet.account,
+          gasFee: "0x5208",
+          receiveTransactionId: tx,
+        });
+
+        alert("success");
+        console.log("res", res);
+      } catch (e) {
+        alert("failed");
+        console.error(e);
+      }
     }
   };
 
