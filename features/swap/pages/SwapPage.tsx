@@ -40,9 +40,9 @@ const SwapPage: NextPage = () => {
 
   return (
     <div className="flex items-center justify-center bg-slate-200 w-full h-screen gap-12">
-      <Box className="w-1/2 min-w-[340px] h-[600px] overflow-y-auto">
+      {/* <Box className="w-1/2 min-w-[340px] h-[600px] overflow-y-auto">
         <HistoryTable />
-      </Box>
+      </Box> */}
       <Box className="w-1/6 min-w-[300px]">
         <h1 className="text-2xl font-bold">Swap</h1>
         <div>
