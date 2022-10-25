@@ -2,9 +2,10 @@ import Box from "@/components/Box";
 import TextInput from "@/components/TextInput";
 import HistoryTable from "@/features/history/components/HistoryTable";
 import useMetaMask from "@/features/wallet/hooks/useMetamask";
+import { useRequestTransfer } from "@/requests/useTransferService";
 import axios from "axios";
 import { GetServerSideProps, NextPage } from "next";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import SwapForm from "../components/SwapForm";
 
 export const getServerSideProps: GetServerSideProps = async () => {
@@ -13,17 +14,22 @@ export const getServerSideProps: GetServerSideProps = async () => {
 
 const SwapPage: NextPage = () => {
   const wallet = useMetaMask();
-  const [host, setHost] = useState<string | null>(
-    "https://ca10-116-36-205-131.jp.ngrok.io"
-  );
+  const { mutate: requestTransfer } = useRequestTransfer();
+
+  useEffect(() => {
+    wallet.connect();
+  }, []);
 
   const handleSubmit = async (formData: { from: number; to: number }) => {
-    await wallet.connect();
     const tx = await wallet.send(formData.from);
 
-    if (tx && host) {
+    if (!wallet.account) {
+      return;
+    }
+
+    if (tx) {
       try {
-        const res = await axios.post(host + "/transfers/transfer", {
+        requestTransfer({
           chainId: "0x5",
           startToken: "eth",
           endToken: "usdt",
@@ -36,7 +42,6 @@ const SwapPage: NextPage = () => {
         });
 
         alert("success");
-        console.log("res", res);
       } catch (e) {
         alert("failed");
         console.error(e);
@@ -46,20 +51,11 @@ const SwapPage: NextPage = () => {
 
   return (
     <div className="flex items-center justify-center bg-slate-200 w-full h-screen gap-12">
-      {/* <Box className="w-1/2 min-w-[340px] h-[600px] overflow-y-auto">
+      <Box className="w-1/2 min-w-[340px] h-[600px] overflow-y-auto">
         <HistoryTable />
-      </Box> */}
+      </Box>
       <Box className="w-1/6 min-w-[300px]">
         <h1 className="text-2xl font-bold">Swap</h1>
-        <div>
-          <TextInput
-            label="host"
-            value={host || ""}
-            onChange={(e) => {
-              setHost(e.target.value);
-            }}
-          />
-        </div>
         <SwapForm onSubmit={handleSubmit} />
       </Box>
     </div>

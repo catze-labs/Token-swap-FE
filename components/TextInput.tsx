@@ -23,7 +23,7 @@ const TextInput: React.FC<TextInputProps> = ({
       <input
         className={clsx(
           "w-full border-2 border-gray-300 rounded p-2",
-          loading && "bg-gray-500 animate-pulse"
+          loading && "bg-gray-200 animate-pulse"
         )}
         {...props}
         onChange={(e) => {

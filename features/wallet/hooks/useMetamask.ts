@@ -13,7 +13,9 @@ export default function useMetaMask() {
       console.error("No ethereum object found");
       return;
     }
+
     setLoading(true);
+
     try {
       /**
        * CHANGE CHAIN ID TO GOERLI
@@ -72,6 +74,11 @@ export default function useMetaMask() {
       return;
     }
 
+    if (!account) {
+      console.error("No account found");
+      return;
+    }
+
     setLoading(true);
 
     try {
@@ -94,7 +101,7 @@ export default function useMetaMask() {
 
       return tx;
     } catch (error) {
-      console.error(error);
+      console.error("❌", error);
       if (error instanceof Error) {
         setError(error);
       }
