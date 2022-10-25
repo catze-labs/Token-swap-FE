@@ -1,8 +1,7 @@
 import axios from "axios";
 
 const client = axios.create({
-  // baseURL: "",
-  // headers: {},
+  baseURL: "http://localhost:8080",
 });
 
 // request interceptor

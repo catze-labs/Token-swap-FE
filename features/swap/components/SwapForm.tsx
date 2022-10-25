@@ -41,7 +41,8 @@ const SwapForm: React.FC<SwapFormProps> = ({ onSubmit }) => {
   };
 
   useEffect(() => {
-    delayedSetTo(from * SWAP_RATE);
+    // 뒤의 무의미한 식은 자바스크립트 부동소수점 계산 오차를 방지하기 위함
+    delayedSetTo((from * SWAP_RATE * 100000) / 100000);
   }, [from]);
 
   const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
@@ -66,7 +67,12 @@ const SwapForm: React.FC<SwapFormProps> = ({ onSubmit }) => {
         </div>
 
         <div className="flex gap-2 items-end">
-          <TextInput label="To SETH" value={to} loading={loading} />
+          <div className="w-2/3">
+            <TextInput label="To" value={to} loading={loading} />
+          </div>
+          <div className="w-1/3">
+            <Select options={[{ label: "USDT", value: "USDT" }]} />{" "}
+          </div>
         </div>
       </div>
       <Button className="w-full">Swap</Button>
